@@ -36,24 +36,53 @@ enum Operation {
 
 }
 
+class Matrix {
+    private int row;
+    private int column;
+    private Complex[][] data;
+
+    public Matrix(int row, int column) {
+        this.row = row;
+        this.column = column;
+        this.data = new Complex[row][column];
+        for (int i = 0; i < row; i++)
+            for (int j = 0; j < column; j++)
+                data[i][j] = new Complex(0, 0);
+    }
+
+    public Complex determinant(){
+        if (row != column) {
+            throw new IllegalArgumentException("The matrix must be SQUARE");
+        }
+    }
+
+    private Complex determinantRecursive(){
+
+    }
+}
+
 
 public class lab1 {
     public static void main(String[] args) {
         System.out.println("Hello");
 
-        //пользователь вводит номер операции
-        System.out.println("Enter the operation:");
+        //пользователь вводит номер операции с клавиатуры
+        System.out.println("Choose the operation (1-6):");
+        System.out.println("1 - ADD; 2 - SUBTRACT; 3 - MULTIPLY; 4 - DIVIDE; 5 - TRANSPOSE; 6 - DETERMINANT");
         Scanner scanner = new Scanner(System.in);
         int choice = scanner.nextInt();
-        Operation op = switch (choice) {
-            case 1 -> Operation.ADD;
-            case 2 -> Operation.SUBTRACT;
-            case 3 -> Operation.MULTIPLY;
-            case 4 -> Operation.DIVIDE;
-            case 5 -> Operation.TRANSPOSE;
-            case 6 -> Operation.DETERMINANT;
-            default -> throw new IllegalArgumentException("Неверная операция");
-        };
+
+        //в зависимости от выбора операции, будет выполнен тот или иной кейс
+        switch (choice) {
+            case 1:
+                System.out.println("1op");
+                break;
+            case 6:
+                System.out.println("You have chosen a DETERMINANT");
+            default:
+                throw new IllegalArgumentException("Wrong operation");
+        }
+
 
 
         Complex figure1 = new Complex(4, 5);
@@ -67,7 +96,5 @@ public class lab1 {
 }
 
 
-class Matrix {
 
-}
 
