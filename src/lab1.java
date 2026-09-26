@@ -18,8 +18,10 @@ class Complex {
     }
 
     public String toString(){
-        if (img >= 0) {
+        if (img > 0) {
             return real + " + " + img + "i";
+        } else if (img == 0) {
+            return "" + real;
         } else {
             return real + " - " + (-img) + "i";
         }
