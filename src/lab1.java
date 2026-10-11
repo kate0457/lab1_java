@@ -9,7 +9,6 @@ class Complex {
         this.img = 0;
     }
 
-
     public Complex(int real, int img) {
         this.real = real;
         this.img = img;
@@ -27,12 +26,12 @@ class Complex {
 }
 
 enum Operation {
-    ADD,
-    SUBTRACT,
-    MULTIPLY,
-    DIVIDE,
-    TRANSPOSE,
-    DETERMINANT
+    ADD,        //+
+    SUBTRACT,   //-
+    MULTIPLY,   //*
+    DIVIDE,     //делить
+    TRANSPOSE,  //транспонировать
+    DETERMINANT //детерминант
 
 }
 
@@ -50,15 +49,10 @@ class Matrix {
                 data[i][j] = new Complex(0, 0);
     }
 
-    public Complex determinant(){
-        if (row != column) {
-            throw new IllegalArgumentException("The matrix must be SQUARE");
-        }
-    }
 
-    private Complex determinantRecursive(){
 
-    }
+
+
 }
 
 
@@ -67,10 +61,22 @@ public class lab1 {
         System.out.println("Hello");
 
         //пользователь вводит номер операции с клавиатуры
-        System.out.println("Choose the operation (1-6):");
-        System.out.println("1 - ADD; 2 - SUBTRACT; 3 - MULTIPLY; 4 - DIVIDE; 5 - TRANSPOSE; 6 - DETERMINANT");
         Scanner scanner = new Scanner(System.in);
-        int choice = scanner.nextInt();
+        int choice = -1;
+
+        while (true) {
+            System.out.println("Choose the operation (1-6):");
+            System.out.println("1 - ADD; 2 - SUBTRACT; 3 - MULTIPLY; 4 - DIVIDE; 5 - TRANSPOSE; 6 - DETERMINANT");
+            String input = scanner.nextLine();
+
+            try {
+                choice = Integer.parseInt(input);
+                break;
+            } catch (NumberFormatException e) {
+                System.out.println("Error: enter an integer :(\n");
+            }
+        }
+
 
         //в зависимости от выбора операции, будет выполнен тот или иной кейс
         switch (choice) {
@@ -79,6 +85,7 @@ public class lab1 {
                 break;
             case 6:
                 System.out.println("You have chosen a DETERMINANT");
+                break;
             default:
                 throw new IllegalArgumentException("Wrong operation");
         }
@@ -88,10 +95,14 @@ public class lab1 {
         Complex figure1 = new Complex(4, 5);
         Complex figure2 = new Complex(6, 0);
         Complex figure3 = new Complex(3, -2);
+        Complex figure4 = new Complex(0, 0);
+        Complex figure5 = new Complex(-9, -67);
 
         System.out.println(figure1.toString());
         System.out.println(figure2.toString());
         System.out.println(figure3.toString());
+        System.out.println(figure5.toString());
+        System.out.println(figure5.toString());
     }
 }
 
