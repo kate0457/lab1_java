@@ -4,6 +4,10 @@ class Complex {
     private int real;
     private int img;
 
+    //геттеры
+    public int get_real() {return real;}
+    public int get_img() {return img;}
+
     public Complex() {
         this.real = 0;
         this.img = 0;
