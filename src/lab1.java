@@ -28,6 +28,11 @@ class Complex {
     public Complex add(Complex other){
         return new Complex(this.real + other.real, this.img + other.img);
     }
+
+    //метод вычитания
+    public Complex subtract(Complex other){
+        return new Complex(this.real - other.real, this.img - other.img);
+    }
 }
 
 enum Operation {
