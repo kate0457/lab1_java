@@ -23,6 +23,11 @@ class Complex {
             return real + " - " + (-img) + "i";
         }
     }
+
+    //метод сложения
+    public Complex add(Complex other){
+        return new Complex(this.real + other.real, this.img + other.img);
+    }
 }
 
 enum Operation {
@@ -81,12 +86,14 @@ public class lab1 {
         //в зависимости от выбора операции, будет выполнен тот или иной кейс
         switch (choice) {
             case 1:
+                //сложение
                 System.out.println("1op");
                 break;
             case 6:
                 System.out.println("You have chosen a DETERMINANT");
                 break;
             default:
+                //пользователь любит нарушать установленные правила, выкидываем исключение
                 throw new IllegalArgumentException("Wrong operation");
         }
 
