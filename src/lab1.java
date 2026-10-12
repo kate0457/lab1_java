@@ -33,6 +33,18 @@ class Complex {
     public Complex subtract(Complex other){
         return new Complex(this.real - other.real, this.img - other.img);
     }
+
+    //метод умножение
+    public Complex multiply(Complex other){
+        int new_real = this.real*other.real - this.img*other.img;
+        int new_img = this.real*other.img - this.img*other.real;
+        return new Complex(new_real, new_img);
+    }
+
+    //метод -вайб
+    public Complex negative(Complex other){
+        return new Complex(-real, -img);
+    }
 }
 
 enum Operation {
@@ -77,6 +89,7 @@ public class lab1 {
         while (true) {
             System.out.println("Choose the operation (1-6):");
             System.out.println("1 - ADD; 2 - SUBTRACT; 3 - MULTIPLY; 4 - DIVIDE; 5 - TRANSPOSE; 6 - DETERMINANT");
+
             String input = scanner.nextLine();
 
             try {
