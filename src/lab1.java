@@ -55,7 +55,13 @@ class Complex {
     }
 
     //метод деление
-    public
+    public Complex divide(Complex other){
+        int znam = other.real*other.real + other.img*other.img;
+        if (znam == 0) { throw new ArithmeticException("dividing by 0 :(");}
+        int new_real = (this.real*other.real + this.img*other.img) / znam;
+        int new_img = (this.img*other.real + this.real*other.img) / znam;
+        return new Complex(new_real, new_img);
+    }
 }
 
 enum Operation {
@@ -82,7 +88,44 @@ class Matrix {
                 data[i][j] = new Complex(0, 0);
     }
 
+    private static Matrix read_matrix(Scanner scanner, String name){
+        while (True){
+            try{
+                System.out.println("Matrix " + name + ": ");
+                System.out.print("  rows:  ");
+                int row = Integer.parseInt(scanner.nextLine());
+                System.out.print("  columns:  ");
+                int column = Integer.parseInt(scanner.nextLine());
 
+                if (row <= 0 || column <= 0){
+                    System.out.println("The dimensions should be positive.");
+                    continue;
+                }
+
+                Matrix m = new Matrix(row, column);
+                for (int i = 0; i < row; i++){
+                    for (int j = 0; j < column; j++){
+                        System.out.println("  [" + i + "][" + "] real")
+                    }
+                }
+            }
+        }
+    }
+
+
+    public Matrix add(Matrix other){
+        if (this.row != other.row || this.column != other.column) {
+            throw new IllegalArgumentException("The sizes of the matrices do not match:" + this.row + "x" + this.column + " and " + other.row + "x" + other.column);
+        }
+
+        Matrix result = new Matrix(row, column);
+        for (int i = 0; i < row; i++){
+            for (int j = 0; j < column; j++){
+                result.data[i][j] = this.data[i][j].add(other.data[i][j]);
+            }
+        }
+        return result;
+    }
 
 
 
@@ -116,7 +159,7 @@ public class lab1 {
         switch (choice) {
             case 1:
                 //сложение
-                System.out.println("1op");
+                System.out.println("You have chosen an ADDITION");
                 break;
             case 6:
                 System.out.println("You have chosen a DETERMINANT");
@@ -128,8 +171,8 @@ public class lab1 {
 
 
 
-        Complex figure1 = new Complex(0, 5);
-        Complex figure2 = new Complex(6, 0);
+        Complex figure1 = new Complex(1, 1);
+        Complex figure2 = new Complex(1, 1);
         Complex figure3 = new Complex(3, -2);
         Complex figure4 = new Complex(0, 0);
         Complex figure5 = new Complex(-9, -67);
@@ -139,6 +182,8 @@ public class lab1 {
         System.out.println(figure3.to_string());
         System.out.println(figure4.to_string());
         System.out.println(figure5.to_string());
+
+        System.out.println(figure1.subtract(figure2).to_string());
     }
 }
 
