@@ -59,7 +59,7 @@ class Complex {
         int znam = other.real*other.real + other.img*other.img;
         if (znam == 0) { throw new ArithmeticException("dividing by 0 :(");}
         int new_real = (this.real*other.real + this.img*other.img) / znam;
-        int new_img = (this.img*other.real + this.real*other.img) / znam;
+        int new_img = (this.img*other.real - this.real*other.img) / znam;
         return new Complex(new_real, new_img);
     }
 }
@@ -79,6 +79,8 @@ class Matrix {
     private int column;
     private Complex[][] data;
 
+    public void set(int i, int j, Complex x) { data[i][j] = x; }    //в опред. ячейку матрицы заносим значение
+
     public Matrix(int row, int column) {
         this.row = row;
         this.column = column;
@@ -88,8 +90,14 @@ class Matrix {
                 data[i][j] = new Complex(0, 0);
     }
 
+    public Complex parse(String s){
+        System.out.println(s);
+        return new Complex(0, 0);
+    }
+
+
     private static Matrix read_matrix(Scanner scanner, String name){
-        while (True){
+        while (true){
             try{
                 System.out.println("Matrix " + name + ": ");
                 System.out.print("  rows:  ");
@@ -105,9 +113,19 @@ class Matrix {
                 Matrix m = new Matrix(row, column);
                 for (int i = 0; i < row; i++){
                     for (int j = 0; j < column; j++){
-                        System.out.println("  [" + i + "][" + "] real")
+                        System.out.println("  [" + i + "][" + j + "] (correct format x+yi): ");
+                        String s = scanner.nextLine();
+                        try{
+                            m.set(i, j, parse(s));
+                            break;
+                        } catch (NumberFormatException e){
+                            System.out.println("Error of format. Correct format examples: 4+5i, 3, -2-i, i");
+                        }
                     }
                 }
+                return m;
+            } catch (NumberFormatException e) {
+                System.out.println("Error: you need an integer. Try again.");
             }
         }
     }
@@ -146,7 +164,7 @@ public class lab1 {
 
             String input = scanner.nextLine();
 
-            try {
+            try {   //проверка на целое число
                 choice = Integer.parseInt(input);
                 break;
             } catch (NumberFormatException e) {
@@ -161,7 +179,16 @@ public class lab1 {
                 //сложение
                 System.out.println("You have chosen an ADDITION");
                 break;
+            case 2:
+                //вычитание
+            case 3:
+                //умножение
+            case 4:
+                //делить
+            case 5:
+                //транспонировать
             case 6:
+                //детерминант
                 System.out.println("You have chosen a DETERMINANT");
                 break;
             default:
