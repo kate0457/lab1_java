@@ -90,13 +90,13 @@ class Matrix {
                 data[i][j] = new Complex(0, 0);
     }
 
-    public Complex parse(String s){
+    public static Complex parse(String s){
         System.out.println(s);
         return new Complex(0, 0);
     }
 
 
-    private static Matrix read_matrix(Scanner scanner, String name){
+    public static Matrix read_matrix(Scanner scanner, String name){
         while (true){
             try{
                 System.out.println("Matrix " + name + ": ");
@@ -178,15 +178,28 @@ public class lab1 {
             case 1:
                 //сложение
                 System.out.println("You have chosen an ADDITION");
+                Matrix a = Matrix.read_matrix(scanner, "1");
+                Matrix b = Matrix.read_matrix(scanner, "2");
+                try{
+                    Matrix result = a.add(b);
+                    System.out.println("Result:");
+                    System.out.println(result);
+                } catch (IllegalArgumentException e){
+                    System.out.println("Error: " + e.getMessage());
+            }
                 break;
             case 2:
                 //вычитание
+                break;
             case 3:
                 //умножение
+                break;
             case 4:
                 //делить
+                break;
             case 5:
                 //транспонировать
+                break;
             case 6:
                 //детерминант
                 System.out.println("You have chosen a DETERMINANT");
