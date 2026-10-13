@@ -149,7 +149,7 @@ class Matrix {
                 Matrix m = new Matrix(row, column);
                 for (int i = 0; i < row; i++){
                     for (int j = 0; j < column; j++){
-                        System.out.println("  [" + i + "][" + j + "] (correct format x+yi): ");
+                        System.out.print("  [" + i + "][" + j + "] (correct format x+yi): ");
                         String s = scanner.nextLine();
                         try{
                             m.set(i, j, parse(s));
@@ -205,7 +205,28 @@ class Matrix {
         }
         return result;
     }
+
+    public Matrix multiply(Matrix other){
+        //проверяем, иначе умножать нельзя блин блинский
+        if (this.column != other.row) {
+            throw new IllegalArgumentException("The columns of first matrix (" + this.column + ") do not match the rows of second (" + other.row + ")");
+        }
+
+        //создали новую матрицу (куда запишем результат умножения)
+        Matrix result = new Matrix(this.row, other.column);
+        for (int i = 0; i < this.row; i++){
+            for (int j = 0; j < other.column; j++) {
+                Complex sum = new Complex(0, 0);
+                for (int k = 0; k < this.column; k++){
+                    sum = sum.add(this.data[i][k].multiply(other.data[k][j]));
+                }
+                result.data[i][j]= sum;
+            }
+        }
+        return result;
+    }
 }
+
 
 
 public class lab1 {
@@ -240,11 +261,18 @@ public class lab1 {
                 Matrix b = Matrix.read_matrix(scanner, "2");
                 try{
                     Matrix result = a.add(b);
-                    System.out.println("Result:");
+                    System.out.println("\nMatrix 1:");
+                    System.out.println(a.print());
+
+                    System.out.println("\nMatrix 2:");
+                    System.out.println(b.print());
+
+                    System.out.println("\nResult of addition:");
                     System.out.println(result.print());
                 } catch (IllegalArgumentException e){
                     System.out.println("Error: " + e.getMessage());
-            }}
+                }
+            }
                 break;
 
             case 2:{
@@ -254,17 +282,44 @@ public class lab1 {
                 Matrix b = Matrix.read_matrix(scanner, "2");
                 try {
                     Matrix result = a.subtract(b);
-                    System.out.println("Result:");
+                    System.out.println("\nMatrix 1:");
+                    System.out.println(a.print());
+
+                    System.out.println("\nMatrix 2:");
+                    System.out.println(b.print());
+
+                    System.out.println("\nResult of substraction:");
                     System.out.println(result.print());
                 } catch (IllegalArgumentException e) {
                     System.out.println("Error: " + e.getMessage());
-                }}
+                }
+            }
                 break;
 
-            case 3:
+            case 3: {
                 //умножение
+                System.out.println("You have chosen an MULTIPLICATION");
+                System.out.println("The columns of the first matrix MUST match the rows of the second matrix, otherwise the operation will NOT be performed");
+                System.out.println("[a][b] * [b][c] = [a][c]");
 
+                Matrix a = Matrix.read_matrix(scanner, "1");
+                Matrix b = Matrix.read_matrix(scanner, "2");
+                try {
+                    Matrix result = a.multiply(b);
+                    System.out.println("\nMatrix 1:");
+                    System.out.println(a.print());
+
+                    System.out.println("\nMatrix 2:");
+                    System.out.println(b.print());
+
+                    System.out.println("\nResult of multiplication:");
+                    System.out.println(result.print());
+                } catch (IllegalArgumentException e) {
+                    System.out.println("Error: " + e.getMessage());
+                }
+            }
                 break;
+
             case 4:
                 //делить
                 break;
