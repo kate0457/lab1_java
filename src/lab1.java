@@ -192,8 +192,19 @@ class Matrix {
         return result;
     }
 
+    public Matrix subtract(Matrix other){
+        if (this.row != other.row || this.column != other.column) {
+            throw new IllegalArgumentException("The sizes of the matrices do not match: " + this.row + "x" + this.column + " and " + other.row + "x" + other.column);
+        }
 
-
+        Matrix result = new Matrix(row, column);
+        for (int i = 0; i < row; i++){
+            for (int j = 0; j < column; j++){
+                result.data[i][j] = this.data[i][j].subtract(other.data[i][j]);
+            }
+        }
+        return result;
+    }
 }
 
 
@@ -222,7 +233,7 @@ public class lab1 {
 
         //в зависимости от выбора операции, будет выполнен тот или иной кейс
         switch (choice) {
-            case 1:
+            case 1:{
                 //сложение
                 System.out.println("You have chosen an ADDITION");
                 Matrix a = Matrix.read_matrix(scanner, "1");
@@ -233,13 +244,26 @@ public class lab1 {
                     System.out.println(result.print());
                 } catch (IllegalArgumentException e){
                     System.out.println("Error: " + e.getMessage());
-            }
+            }}
                 break;
-            case 2:
+
+            case 2:{
                 //вычитание
+                System.out.println("You have chosen an SUBTRACTION");
+                Matrix a = Matrix.read_matrix(scanner, "1");
+                Matrix b = Matrix.read_matrix(scanner, "2");
+                try {
+                    Matrix result = a.subtract(b);
+                    System.out.println("Result:");
+                    System.out.println(result.print());
+                } catch (IllegalArgumentException e) {
+                    System.out.println("Error: " + e.getMessage());
+                }}
                 break;
+
             case 3:
                 //умножение
+
                 break;
             case 4:
                 //делить
