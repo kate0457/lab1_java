@@ -315,19 +315,31 @@ public class lab1 {
     public static void main(String[] args) {
         System.out.println("Hello");
 
+        String RED    = "\u001B[31m";
+        String ORANGE = "\u001B[38;5;208m";
+        String RESET = "\u001B[0m";
+
         //пользователь вводит номер операции с клавиатуры
         Scanner scanner = new Scanner(System.in);
-        int choice = -1;
 
-        while (true) {
+        Operation choice = null;
+        while (choice == null) {
             System.out.println("Choose the operation (1-6):");
             System.out.println("1 - ADD; 2 - SUBTRACT; 3 - MULTIPLY; 4 - TRANSPOSE; 5 - DETERMINANT; 6 - INVERSE");
-
             String input = scanner.nextLine();
 
-            try {   //проверка на целое число
-                choice = Integer.parseInt(input);
-                break;
+            try {
+                int number = Integer.parseInt(input);
+                choice = switch(number){
+                    case 1 -> Operation.ADD;
+                    case 2 -> Operation.SUBTRACT;
+                    case 3 -> Operation.MULTIPLY;
+                    case 4 -> Operation.TRANSPOSE;
+                    case 5 -> Operation.DETERMINANT;
+                    case 6 -> Operation.INVERSE;
+                    default -> null;
+                };
+                if (choice == null) { System.out.println("Error: choose 1-6");}
             } catch (NumberFormatException e) {
                 System.out.println("Error: enter an integer :(\n");
             }
@@ -336,9 +348,10 @@ public class lab1 {
 
         //в зависимости от выбора операции, будет выполнен тот или иной кейс
         switch (choice) {
-            case 1:{
+            case ADD:{
                 //сложение
-                System.out.println("You have chosen an ADDITION");
+                System.out.println("You have chosen an " + ORANGE + "ADDITION" + RESET);
+                System.out.println("The " + RED + "sizes" + RESET + " of the matrices should be " + RED + "equal" + RESET);
                 Matrix a = Matrix.read_matrix(scanner, "1");
                 Matrix b = Matrix.read_matrix(scanner, "2");
                 try{
@@ -357,9 +370,9 @@ public class lab1 {
             }
                 break;
 
-            case 2:{
+            case SUBTRACT:{
                 //вычитание
-                System.out.println("You have chosen an SUBTRACTION");
+                System.out.println("You have chosen an " + ORANGE + "SUBTRACTION" + RESET);
                 Matrix a = Matrix.read_matrix(scanner, "1");
                 Matrix b = Matrix.read_matrix(scanner, "2");
                 try {
@@ -378,10 +391,10 @@ public class lab1 {
             }
                 break;
 
-            case 3: {
+            case MULTIPLY: {
                 //умножение
-                System.out.println("You have chosen an MULTIPLICATION");
-                System.out.println("The columns of the first matrix MUST match the rows of the second matrix, otherwise the operation will NOT be performed");
+                System.out.println("You have chosen an " + ORANGE + "MULTIPLICATION" + RESET);
+                System.out.println("The columns of the first matrix" + RED + " MUST" + RESET + " match the rows of the second matrix, otherwise the operation will " + RED + "NOT" + RESET + " be performed");
                 System.out.println("[a][b] * [b][c] = [a][c]");
 
                 Matrix a = Matrix.read_matrix(scanner, "1");
@@ -402,9 +415,9 @@ public class lab1 {
             }
                 break;
 
-            case 4: {
+            case TRANSPOSE: {
                 //транспонировать
-                System.out.println("You have chosen an TRANSPOSED MATRIX");
+                System.out.println("You have chosen an " + ORANGE + "TRANSPOSED MATRIX" + RESET);
                 Matrix a = Matrix.read_matrix(scanner, "");
                 try {
                     Matrix result = a.transpose();
@@ -419,9 +432,10 @@ public class lab1 {
             }
                 break;
 
-            case 5: {
+            case DETERMINANT: {
                 //детерминант
-                System.out.println("You have chosen a DETERMINANT");
+                System.out.println("You have chosen a " + ORANGE + "DETERMINANT" + RESET);
+                System.out.println("The matrix MUST be SQUARE");
                 Matrix a = Matrix.read_matrix(scanner, "");
                 try {
                     Complex result = a.determinant();
@@ -435,10 +449,10 @@ public class lab1 {
                 }
             }
                 break;
-            case 6: {
+            case INVERSE: {
                 //найти обратную матрицу
-                System.out.println("You have chosen an INVERSED MATRIX");
-                System.out.println("The matrix MUST be SQUARE, and its determinant must NOT be ZERO");
+                System.out.println("You have chosen an " + ORANGE + "INVERSED MATRIX" + RESET);
+                System.out.println("The matrix " + RED + "MUST" + RESET + " be" + RED + " SQUARE" + RESET + ", and its determinant must " + RED + "NOT" + RESET + " be " + RED + "ZERO" + RESET);
 
                 Matrix a = Matrix.read_matrix(scanner, "");
                 try {
