@@ -236,7 +236,43 @@ class Matrix {
         return result;
     }
 
-    public determinant()
+    public Complex determinant(){
+        //детерминант можно искать только у квадр матриц
+        if (this.row != this.column) {throw new IllegalArgumentException("The matrix must be SQUARE");}
+        if (this.row == 1 && this.column == 1){ return this.data[0][0];}
+        if (this.row == 2 && this.column == 2){
+            return (this.data[0][0].multiply(this.data[1][1])).subtract(this.data[0][1].multiply(this.data[1][0]));
+            //[0][0]*[1][1] - [0][1]*[1][0]
+        }
+
+        Complex det = new Complex(0,0);
+        for (int j = 0; j < this.column; j++){
+            Matrix m = this.minor(0, j);
+            Complex n = this.data[0][j].multiply(m.determinant());
+            if (j % 2 == 1) {
+                n = n.negative(null);
+            }
+            det = det.add(n);
+        }
+        return det;
+    }
+
+    public Matrix minor(int middle_row, int middle_column) {
+        Matrix result = new Matrix(this.row - 1, this.column - 1);
+        int row = 0;
+        for (int i = 0; i < this.row; i++){
+            if (i == middle_row) {continue;}
+
+            int column = 0;
+            for (int j = 0; j < this.column; j++){
+                if (j == middle_column) {continue;}
+                result.data[row][column] = this.data[i][j];
+                column++;
+            }
+            row++;
+        }
+        return result;
+    }
 }
 
 
@@ -348,23 +384,25 @@ public class lab1 {
                 }
             }
                 break;
-            case 5:
+
+            case 5: {
                 //детерминант
                 System.out.println("You have chosen a DETERMINANT");
                 Matrix a = Matrix.read_matrix(scanner, "");
                 try {
-                    Matrix result = a.determinant();
+                    Complex result = a.determinant();
                     System.out.println("\nMatrix:");
                     System.out.println(a.print());
 
-                    System.out.println("\nTransposed matrix:");
-                    System.out.println(result.print());
+                    System.out.println("\nDeterminant:");
+                    System.out.println(result.to_string());
                 } catch (IllegalArgumentException e) {
                     System.out.println("Error: " + e.getMessage());
                 }
-        }
-        break;
+            }
+                break;
             case 6:
+
                 //найти обратную матрицу
                 System.out.println("You have chosen an INVERSED MATRIX");
 
