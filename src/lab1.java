@@ -273,6 +273,40 @@ class Matrix {
         }
         return result;
     }
+
+    public Matrix inverse(){
+        //обратные только для квадратных
+        if (this.row != this.column) {
+            throw new IllegalArgumentException("The matrix must be SQUARE");
+        }
+
+        Complex det = this.determinant();
+        if (det.get_real() == 0 && det.get_img() == 0) {
+            throw new IllegalArgumentException("The determinant is ZERO, the inverse matrix does NOT exist");
+        }
+
+        //если матрица 1*1
+        if (this.row == 1 && this.column == 1){
+            Matrix result = new Matrix(1,1);
+            result.data[0][0] = new Complex(1, 0).divide(this.data[0][0]);
+            return result;
+        }
+
+        Matrix result = new Matrix(this.row, this.column);
+        for (int i = 0; i < this.row; i++){
+            for (int j = 0; j < this.column; j++){
+                Matrix matrix = this.minor(i, j);
+                Complex minor_det = matrix.determinant();
+
+                if ((i+j) % 2 == 1){
+                    minor_det = minor_det.negative(null);
+                }
+
+                result.data[i][j] = minor_det.divide(det);
+            }
+        }
+        return result.transpose();
+    }
 }
 
 
@@ -401,12 +435,26 @@ public class lab1 {
                 }
             }
                 break;
-            case 6:
-
+            case 6: {
                 //найти обратную матрицу
                 System.out.println("You have chosen an INVERSED MATRIX");
+                System.out.println("The matrix MUST be SQUARE, and its determinant must NOT be ZERO");
 
+                Matrix a = Matrix.read_matrix(scanner, "");
+                try {
+                    Matrix result = a.inverse();
+                    System.out.println("\nMatrix:");
+                    System.out.println(a.print());
+
+                    System.out.println("Inversed matrix:");
+                    System.out.println(result.print());
+                } catch (IllegalArgumentException e) {
+                    System.out.println("Error: " + e.getMessage());
+                }
+            }
                 break;
+
+
             default:
                 //пользователь любит нарушать установленные правила, выкидываем исключение
                 throw new IllegalArgumentException("Wrong operation");
