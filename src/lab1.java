@@ -68,7 +68,7 @@ enum Operation {
     ADD,        //+
     SUBTRACT,   //-
     MULTIPLY,   //*
-    DIVIDE,     //делить
+    INVERSE,     //найти обратную матрицу
     TRANSPOSE,  //транспонировать
     DETERMINANT //детерминант
 
@@ -225,6 +225,18 @@ class Matrix {
         }
         return result;
     }
+
+    public Matrix transpose() {
+        Matrix result = new Matrix(column, row);
+        for (int i = 0; i < this.row; i++) {
+            for (int j = 0; j < this.column; j++) {
+                result.data[j][i] = this.data[i][j];
+            }
+        }
+        return result;
+    }
+
+    public determinant()
 }
 
 
@@ -239,7 +251,7 @@ public class lab1 {
 
         while (true) {
             System.out.println("Choose the operation (1-6):");
-            System.out.println("1 - ADD; 2 - SUBTRACT; 3 - MULTIPLY; 4 - DIVIDE; 5 - TRANSPOSE; 6 - DETERMINANT");
+            System.out.println("1 - ADD; 2 - SUBTRACT; 3 - MULTIPLY; 4 - TRANSPOSE; 5 - DETERMINANT; 6 - INVERSE");
 
             String input = scanner.nextLine();
 
@@ -320,15 +332,42 @@ public class lab1 {
             }
                 break;
 
-            case 4:
-                //делить
+            case 4: {
+                //транспонировать
+                System.out.println("You have chosen an TRANSPOSED MATRIX");
+                Matrix a = Matrix.read_matrix(scanner, "");
+                try {
+                    Matrix result = a.transpose();
+                    System.out.println("\nMatrix:");
+                    System.out.println(a.print());
+
+                    System.out.println("\nTransposed matrix:");
+                    System.out.println(result.print());
+                } catch (IllegalArgumentException e) {
+                    System.out.println("Error: " + e.getMessage());
+                }
+            }
                 break;
             case 5:
-                //транспонировать
-                break;
-            case 6:
                 //детерминант
                 System.out.println("You have chosen a DETERMINANT");
+                Matrix a = Matrix.read_matrix(scanner, "");
+                try {
+                    Matrix result = a.determinant();
+                    System.out.println("\nMatrix:");
+                    System.out.println(a.print());
+
+                    System.out.println("\nTransposed matrix:");
+                    System.out.println(result.print());
+                } catch (IllegalArgumentException e) {
+                    System.out.println("Error: " + e.getMessage());
+                }
+        }
+        break;
+            case 6:
+                //найти обратную матрицу
+                System.out.println("You have chosen an INVERSED MATRIX");
+
                 break;
             default:
                 //пользователь любит нарушать установленные правила, выкидываем исключение
