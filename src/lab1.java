@@ -90,10 +90,46 @@ class Matrix {
                 data[i][j] = new Complex(0, 0);
     }
 
+    //разделяем каждое введенное пользовательское комплекное число вида x+yi на действительную и мнмую части
     public static Complex parse(String s){
-        System.out.println(s);
-        return new Complex(0, 0);
-    }
+        //System.out.println(s);
+        s = s.replace(" ", ""); //убираем пробелы
+        if (!s.contains("i")) {                   //если нет i, значит в числе только действ часть
+            int real = Integer.parseInt(s);
+            return new Complex(real, 0);
+        }
+            String without_i = s.substring(0, s.length() - 1); //если есть i, отрезаем ее
+
+            //разделяем комплексное число на две части по знаку + или -
+            int pos = -1;
+            for (int i = 1; i < without_i.length(); i++) {
+                if (without_i.charAt(i) == '+' || without_i.charAt(i) == '-') {
+                    pos = i;
+                    break;
+                }
+            }
+
+            //если знака нет значит число только из мнимой части
+            if (pos == -1){
+                int img;
+                if (without_i.equals("") || without_i.equals("+")){ img = 1;}
+                else if (without_i.equals("-")){ img = -1;}
+                else { img = Integer.parseInt(without_i);}
+                return new Complex(0, img);
+            }
+
+            //общий случай
+            int real = Integer.parseInt(without_i.substring(0, pos));
+
+            String img_st = without_i.substring(pos);
+            int img;
+            if (img_st.equals("+")) {img = 1;}
+            else if (img_st.equals("-")) {img =-1;}
+            else {img = Integer.parseInt(img_st);}
+
+            return new Complex(real, img);
+        }
+
 
 
     public static Matrix read_matrix(Scanner scanner, String name){
@@ -117,7 +153,6 @@ class Matrix {
                         String s = scanner.nextLine();
                         try{
                             m.set(i, j, parse(s));
-                            break;
                         } catch (NumberFormatException e){
                             System.out.println("Error of format. Correct format examples: 4+5i, 3, -2-i, i");
                         }
@@ -131,9 +166,21 @@ class Matrix {
     }
 
 
+    public String print(){
+        String st = "";
+        for (int i = 0; i < row; i++){
+            for (int j = 0; j < column; j++){
+                st = st + (data[i][j].to_string()) + "\t";
+            }
+            st= st + "\n";
+        }
+        return st;
+    }
+
+
     public Matrix add(Matrix other){
         if (this.row != other.row || this.column != other.column) {
-            throw new IllegalArgumentException("The sizes of the matrices do not match:" + this.row + "x" + this.column + " and " + other.row + "x" + other.column);
+            throw new IllegalArgumentException("The sizes of the matrices do not match: " + this.row + "x" + this.column + " and " + other.row + "x" + other.column);
         }
 
         Matrix result = new Matrix(row, column);
@@ -183,7 +230,7 @@ public class lab1 {
                 try{
                     Matrix result = a.add(b);
                     System.out.println("Result:");
-                    System.out.println(result);
+                    System.out.println(result.print());
                 } catch (IllegalArgumentException e){
                     System.out.println("Error: " + e.getMessage());
             }
@@ -211,19 +258,15 @@ public class lab1 {
 
 
 
-        Complex figure1 = new Complex(1, 1);
-        Complex figure2 = new Complex(1, 1);
-        Complex figure3 = new Complex(3, -2);
-        Complex figure4 = new Complex(0, 0);
-        Complex figure5 = new Complex(-9, -67);
 
-        System.out.println(figure1.to_string());
-        System.out.println(figure2.to_string());
-        System.out.println(figure3.to_string());
-        System.out.println(figure4.to_string());
-        System.out.println(figure5.to_string());
 
-        System.out.println(figure1.subtract(figure2).to_string());
+        //System.out.println(figure1.to_string());
+        //System.out.println(figure2.to_string());
+        //System.out.println(figure3.to_string());
+        //System.out.println(figure4.to_string());
+        //System.out.println(figure5.to_string());
+
+        //System.out.println(figure1.subtract(figure2).to_string());
     }
 }
 
