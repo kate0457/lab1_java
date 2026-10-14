@@ -13,8 +13,8 @@ public class lab1 {
 
         Operation choice = null;
         while (choice == null) {
-            System.out.println("Choose the operation (1-6):");
-            System.out.println("1 - ADD; 2 - SUBTRACT; 3 - MULTIPLY; 4 - TRANSPOSE; 5 - DETERMINANT; 6 - INVERSE");
+            System.out.println("Choose the operation (1-7):");
+            System.out.println("1 - ADD; 2 - SUBTRACT; 3 - MULTIPLY; 4 - TRANSPOSE; 5 - DETERMINANT; 6 - INVERSE; 7 - DIVIDE");
             String input = scanner.nextLine();
 
             try {
@@ -26,9 +26,10 @@ public class lab1 {
                     case 4 -> Operation.TRANSPOSE;
                     case 5 -> Operation.DETERMINANT;
                     case 6 -> Operation.INVERSE;
+                    case 7 -> Operation.DIVIDE;
                     default -> null;
                 };
-                if (choice == null) { System.out.println("Error: choose 1-6");}
+                if (choice == null) { System.out.println("Error: choose 1-7");}
             } catch (NumberFormatException e) {
                 System.out.println("Error: enter an integer :(\n");
             }
@@ -152,6 +153,31 @@ public class lab1 {
 
                     System.out.println("Inversed matrix:");
                     System.out.println(result.print());
+                } catch (IllegalArgumentException e) {
+                    System.out.println("Error: " + e.getMessage());
+                }
+            }
+
+            case DIVIDE: {
+                //деление матриц
+                System.out.println("You have chosen an " + ORANGE + "DIVISION" + RESET);
+                System.out.println("A / B = A × B⁻¹");
+                System.out.println("The SECOND matrix " + RED + "MUST" + RESET + " be" + RED + " SQUARE" + RESET + ", and its determinant must " + RED + "NOT" + RESET + " be " + RED + "ZERO" + RESET);
+                System.out.println("The columns of the first matrix" + RED + " MUST" + RESET + " match the rows of the second matrix, otherwise the operation will " + RED + "NOT" + RESET + " be performed");
+
+                Matrix a = Matrix.read_matrix(scanner, "1");
+                Matrix b = Matrix.read_matrix(scanner, "2");
+                try {
+                    Matrix result = a.divide(b);
+                    System.out.println("\nMatrix 1:");
+                    System.out.println(a.print());
+
+                    System.out.println("\nMatrix 2:");
+                    System.out.println(b.print());
+
+                    System.out.println("\nResult (A / B = A × B⁻¹):");
+                    System.out.println(result.print());
+
                 } catch (IllegalArgumentException e) {
                     System.out.println("Error: " + e.getMessage());
                 }

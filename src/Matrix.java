@@ -233,5 +233,11 @@ public class Matrix {
         }
         return result.transpose();
     }
+
+    public Matrix divide(Matrix other){
+        // A / B = A * B**-1
+        Matrix inversed_b = other.inverse();
+        return this.multiply(inversed_b);
+    }
 }
 

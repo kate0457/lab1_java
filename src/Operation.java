@@ -4,6 +4,7 @@ public enum Operation {
     MULTIPLY,   //*
     INVERSE,     //найти обратную матрицу
     TRANSPOSE,  //транспонировать
-    DETERMINANT //детерминант
+    DETERMINANT, //детерминант
+    DIVIDE       //деление матриц (уножение первой на обратную второй)
 
 }
