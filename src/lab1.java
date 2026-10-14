@@ -157,6 +157,7 @@ public class lab1 {
                     System.out.println("Error: " + e.getMessage());
                 }
             }
+                break;
 
             case DIVIDE: {
                 //деление матриц
