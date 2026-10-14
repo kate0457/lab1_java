@@ -62,6 +62,7 @@ public class lab1 {
             case SUBTRACT:{
                 //вычитание
                 System.out.println("You have chosen an " + ORANGE + "SUBTRACTION" + RESET);
+                System.out.println("The " + RED + "sizes" + RESET + " of the matrices should be " + RED + "equal" + RESET);
                 Matrix a = Matrix.read_matrix(scanner, "1");
                 Matrix b = Matrix.read_matrix(scanner, "2");
                 try {
@@ -124,7 +125,7 @@ public class lab1 {
             case DETERMINANT: {
                 //детерминант
                 System.out.println("You have chosen a " + ORANGE + "DETERMINANT" + RESET);
-                System.out.println("The matrix MUST be SQUARE");
+                System.out.println("The matrix " + RED + "MUST" + RESET + " be" + RED + " SQUARE" + RESET);
                 Matrix a = Matrix.read_matrix(scanner, "");
                 try {
                     Complex result = a.determinant();

@@ -96,7 +96,7 @@ public class Matrix {
         String st = "";
         for (int i = 0; i < row; i++){
             for (int j = 0; j < column; j++){
-                st = st + (data[i][j].to_string()) + "\t";
+                st = st + String.format("%-8s", data[i][j].to_string()) + "\t";
             }
             st= st + "\n";
         }

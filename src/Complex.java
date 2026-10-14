@@ -21,7 +21,7 @@ public class Complex {
 
         if (img == 0) {                                 //complex(*, 0)
             if (real == Math.floor(real)){
-                return String.valueOf(real);
+                return String.valueOf((long)real);
             }
             return String.format("%.2f", real);
         }
@@ -31,14 +31,14 @@ public class Complex {
             if (img == -1) {return "-i";}               //complex(0, -i)
 
             if (img == Math.floor(img)){
-                return "" + img + "i";
+                return ((long)img) + "i";
             }
             return String.format("%.2f", img) + "i";
         }
 
         String real_str;
         if (real == Math.floor(real)){
-            real_str = String.valueOf(real);
+            real_str = String.valueOf((long)real);
         } else {
             real_str = String.format("%.2f", real);
         }
