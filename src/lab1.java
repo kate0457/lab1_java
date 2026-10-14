@@ -162,7 +162,7 @@ public class lab1 {
             case DIVIDE: {
                 //деление матриц
                 System.out.println("You have chosen an " + ORANGE + "DIVISION" + RESET);
-                System.out.println("A / B = A × B⁻¹");
+                System.out.println("A / B = A × B**(-1)");
                 System.out.println("The SECOND matrix " + RED + "MUST" + RESET + " be" + RED + " SQUARE" + RESET + ", and its determinant must " + RED + "NOT" + RESET + " be " + RED + "ZERO" + RESET);
                 System.out.println("The columns of the first matrix" + RED + " MUST" + RESET + " match the rows of the second matrix, otherwise the operation will " + RED + "NOT" + RESET + " be performed");
 
@@ -176,7 +176,7 @@ public class lab1 {
                     System.out.println("\nMatrix 2:");
                     System.out.println(b.print());
 
-                    System.out.println("\nResult (A / B = A × B⁻¹):");
+                    System.out.println("\nResult (A / B = A × B**(-1)):");
                     System.out.println(result.print());
 
                 } catch (IllegalArgumentException e) {
